@@ -1,0 +1,37 @@
+package com.example.demo2.service;
+
+import com.example.demo2.dao.PersonDao;
+import com.example.demo2.model.Person;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+
+@Service
+public class PersonService {
+    private final PersonDao personDao;
+
+    @Autowired
+    public PersonService(@Qualifier("postgres") PersonDao personDao) {
+        this.personDao = personDao;
+    }
+
+   public int addPerson(Person person){
+        return personDao.insertPerson(person);
+   }
+   public List<Person> getAll(){
+       return personDao.getAll();
+   }
+   public Optional<Person> selectById(UUID id){
+        return personDao.selectById(id);
+   }
+   public int deleteById(UUID id){
+        return personDao.deletePersonById(id);
+   }
+   public int updateById(UUID id,Person person){
+        return personDao.updatePerson(id,person);
+   }
+}
